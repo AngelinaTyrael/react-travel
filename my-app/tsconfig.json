@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "noImplicitAny": false,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true, // 允许混合编译JavaScript文件
+    "skipLibCheck": true,
+    "esModuleInterop": true, // 允许使用commonjs方式导入默认文件 import react from 'react'
+    // "esModuleInterop": false, // 允许使用commonjs方式导入默认文件 import * as react from 'react'
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext", // 模块系统 如：commonjs requirejs
+    "moduleResolution": "node", // 编译器工作方式
+    "resolveJsonModule": true,
+    "isolatedModules": true, // 编译器将每个文件作为单独的模块使用
+    "noEmit": true,
+    "jsx": "react-jsx", // 允许将react编译为js
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules"
+      }
+    ]
+  },
+  "include": [
+    "src"
+  ]
+}
