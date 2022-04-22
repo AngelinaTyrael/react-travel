@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Col, Typography, Divider } from 'antd';
-
 import styles from './BusinessPartners.module.css';
 
 import image1 from '../../assets/images/microsoft-80658_640.png';
