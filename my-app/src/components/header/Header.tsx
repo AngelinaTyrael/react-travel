@@ -1,10 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../../logo.svg';
 import { Layout, Typography, Input, Menu, Button, Dropdown } from 'antd';
 import { GlobalOutlined } from '@ant-design/icons';
 import styles from './Header.module.css';
+import { useNavigate } from 'react-router-dom';
+import store from '../../redux/store';
+import { LanguageState } from '../../redux/languageReducer';
 
 export const Header: React.FC = () => {
+  const navigate = useNavigate();
+
+  interface State extends LanguageState { }
+
+  const storeState = store.getState();
+  const [state, setState] = useState<State>({
+    language: storeState.language,
+    languageList: storeState.languageList
+  });
+
+  const handleStoreChange = () => {
+    const storeState = store.getState()
+    setState({
+      language: storeState.language,
+      languageList: storeState.languageList
+    })
+  }
+
+  store.subscribe(handleStoreChange);
+
+  const menuClickHandler = (e) => {
+    const action = {
+      type: 'change_language',
+      payload: e.key
+    }
+
+    store.dispatch(action);
+  }
+
   return (
     <div className={styles['app-header']}>
       <div className={styles["top-header"]}>
@@ -13,29 +45,32 @@ export const Header: React.FC = () => {
           <Dropdown.Button
             style={{ marginLeft: 15 }}
             overlay={
-              <Menu>
-                <Menu.Item>中文</Menu.Item>
-                <Menu.Item>English</Menu.Item>
+              <Menu onClick={menuClickHandler}>
+                {state.languageList.map(l => {
+                  return <Menu.Item key={l.code}>{l.name}</Menu.Item>
+                })}
               </Menu>
             }
             icon={<GlobalOutlined />}
           >
-            语言
+            {state.language === 'zh' ? '中文' : 'English'}
           </Dropdown.Button>
           <Button.Group className={styles["button-group"]}>
-            <Button>注册</Button>
-            <Button>登录</Button>
+            <Button onClick={() => navigate('register')}>注册</Button>
+            <Button onClick={() => navigate('signIn')}>登录</Button>
           </Button.Group>
         </div>
       </div>
       <Layout.Header className={styles['main-header']}>
-        <img className={styles['App-logo']} src={logo} alt="logo" />
-        <Typography.Title
-          level={3}
-          className={styles.title}
-        >
-          React 旅游网
-        </Typography.Title>
+        <span onClick={() => navigate('/')}>
+          <img className={styles['App-logo']} src={logo} alt="logo" />
+          <Typography.Title
+            level={3}
+            className={styles.title}
+          >
+            React 旅游网
+          </Typography.Title>
+        </span>
         <Input.Search
           className={styles['search-input']}
           placeholder={'请输入旅游目的地、主题、或关键词'}
