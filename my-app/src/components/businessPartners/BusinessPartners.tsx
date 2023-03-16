@@ -22,7 +22,7 @@ export const BusinessPartners: React.FC = () => {
       </Divider>
       <Row>
         {companies.map((c, index) => (
-          <Col span={6} key={"bussiness-partner-" + index}>
+          <Col span={6} key={"business-partner-" + index}>
             <img
               alt="bussiness-partner"
               src={c.src}
@@ -32,6 +32,7 @@ export const BusinessPartners: React.FC = () => {
                 marginLeft: "auto",
                 marginRight: "auto",
               }}
+              alt="business-partner"
             />
           </Col>
         ))}
